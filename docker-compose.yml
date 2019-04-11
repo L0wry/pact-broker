@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  broker:
+    image: dius/pact-broker
+    ports:
+      - "80:80"
+    networks:
+      - pact-broker
+    environment:
+      - PACT_BROKER_DATABASE_USERNAME=pact_user
+      - PACT_BROKER_DATABASE_PASSWORD=password
+      - PACT_BROKER_DATABASE_HOST=postgress
+    depends_on:
+      - postgress
+
+  postgress:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=pact_user
+     
+    networks:
+      - pact-broker
+   
+
+networks:
+  pact-broker:
